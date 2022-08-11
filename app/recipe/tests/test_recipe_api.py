@@ -188,8 +188,8 @@ class PrivateRecipeUrlsTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(Recipe.objects.filter(id=recipe.id).exists())
 
-    def test_recipe_other_users_recipe_error(self):
-        """Test accessing other's recipes returns an error."""
+    def test_delete_other_users_recipe_error(self):
+        """Test manipulating other's recipes returns an error."""
         new_user = create_user(
             email='user2@example.com',
             password='test123'
@@ -200,3 +200,6 @@ class PrivateRecipeUrlsTest(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertTrue(Recipe.objects.filter(id=recipe.id).exists())
+
+    def test_create_recipe_with_new_tags(self):
+        """Test creating a recipe with a new tags."""

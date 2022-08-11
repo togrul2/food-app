@@ -5,6 +5,11 @@ on:
   push:
     branches:
       - 'main'
+env:
+  SECRET_KEY: verysecretkey
+  DEBUG: 1
+  ALLOWED_HOSTS: *
+
 jobs:
   test-lint:
     name: Test and Lint
@@ -17,6 +22,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Set env vars
       - name: Test
         run: docker-compose run --rm app sh -c "python manage.py wait_for_db &&
                                                 python manage.py test"
