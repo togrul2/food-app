@@ -6,10 +6,8 @@ on:
     branches:
       - 'main'
 env:
-  SECRET_KEY: verysecretkey
-  DEBUG: 1
-  ALLOWED_HOSTS: *
-
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  DEBUG: "1"
 jobs:
   test-lint:
     name: Test and Lint
