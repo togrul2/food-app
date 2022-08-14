@@ -62,6 +62,8 @@ class Recipe(models.Model):
     link = models.CharField(_('link'), max_length=255, blank=True)
     tags = models.ManyToManyField('Tag', verbose_name=_('tags'),
                                   related_name='recipes')
+    ingredients = models.ManyToManyField('Ingredient',
+                                         verbose_name=_('indgredients'))
 
     def __str__(self):
         return self.title
@@ -72,6 +74,23 @@ class Tag(models.Model):
     name = models.CharField(_('name'), max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE,
                              verbose_name=_('user'))
+
+    def __str__(self):
+        return self.name
+
+
+class Ingredient(models.Model):
+    """Ingredient model for recipes."""
+    name = models.CharField(_('name'), max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name=_('User')
+    )
+
+    class Meta:
+        verbose_name = _('ingredient')
+        verbose_name_plural = _('ingredients')
 
     def __str__(self):
         return self.name
