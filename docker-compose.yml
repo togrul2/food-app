@@ -16,13 +16,13 @@ services:
              python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     environment:
-      - SECRET_KEY=${SECRET_KEY}
-      - DEBUG=${DEBUG}
-      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DEBUG=1
+      - ALLOWED_HOSTS=*
       - DB_HOST=db
       - DB_NAME=devdb
       - DB_USER=devuser
-      - DB_PASSWORD=changeme
+      - DB_PASS=changeme
     depends_on:
       - db
 

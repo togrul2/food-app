@@ -39,7 +39,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def _params_to_ints(self, qs):
+    @staticmethod
+    def _params_to_ints(qs: str):
         """
         Convert a list of strings to integers.
 
@@ -51,7 +52,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """
-        Retrieve only recipies of authenticated user.
+        Retrieve only recipes of authenticated user.
         """
         tags = self.request.query_params.get('tags')
         ingredients = self.request.query_params.get('ingredients')
