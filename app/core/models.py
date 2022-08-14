@@ -71,8 +71,7 @@ class Recipe(models.Model):
     link = models.CharField(_('link'), max_length=255, blank=True)
     image = models.ImageField(_('image'), null=True,
                               upload_to=recipe_image_file_path)
-    tags = models.ManyToManyField('Tag', verbose_name=_('tags'),
-                                  related_name='recipes')
+    tags = models.ManyToManyField('Tag', verbose_name=_('tags'))
     ingredients = models.ManyToManyField('Ingredient',
                                          verbose_name=_('indgredients'))
 
