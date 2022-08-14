@@ -1,6 +1,8 @@
 """
 Database models.
 """
+import os
+import uuid
 
 from django.db import models
 from django.conf import settings
@@ -10,6 +12,13 @@ from django.contrib.auth.models import (
     PermissionsMixin
 )
 from django.utils.translation import gettext_lazy as _
+
+
+def recipe_image_file_path(instance, filename):
+    """Generate filepath for new recipe image."""
+    extension = os.path.splitext(filename)[1]
+    filename = f'{uuid.uuid4()}{extension}'
+    return os.path.join('uploads', 'recipe', filename)
 
 
 class UserManager(BaseUserManager):
@@ -60,6 +69,8 @@ class Recipe(models.Model):
     time_minutes = models.IntegerField(_('time in minutes'))
     price = models.DecimalField(_('price'), max_digits=5, decimal_places=2)
     link = models.CharField(_('link'), max_length=255, blank=True)
+    image = models.ImageField(_('image'), null=True,
+                              upload_to=recipe_image_file_path)
     tags = models.ManyToManyField('Tag', verbose_name=_('tags'),
                                   related_name='recipes')
     ingredients = models.ManyToManyField('Ingredient',
