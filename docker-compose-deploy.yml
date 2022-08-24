@@ -33,10 +33,32 @@ services:
     depends_on:
       - app
     ports:
-      - "80:8000"
+      - "80:80"
+      - "443:443"
     volumes:
       - static-data:/vol/static
+      - certbot-web:/vol/www
+      - proxy-dhparams:/vol/proxy
+      - certbot-certs:/etc/letsencrypt
+    environment:
+      - DOMAIN=${DOMAIN}
+
+  certbot:
+    build:
+      context: ./proxy/certbot
+    command: echo "Skipping..."
+    environment:
+      - EMAIL=${ACME_DEFAULT_EMAIL}
+      - DOMAIN=${DOMAIN}
+    volumes:
+      - certbot-web:/vol/www
+      - certbot-certs:/etc/letsencrypt
+    depends_on:
+      - proxy
 
 volumes:
   postgres-data:
   static-data:
+  certbot-web:
+  proxy-dhparams:
+  certbot-certs:
